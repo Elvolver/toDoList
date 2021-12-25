@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/toDoList
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: create
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+server:
+  port: 8080
