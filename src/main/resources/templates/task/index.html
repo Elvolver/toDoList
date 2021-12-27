@@ -9,6 +9,6 @@
     <a th:href="@{/task/{id}(id=${task.getId()})}" th:text="${task.getTitle()}"></a>
 </div>
 <hr/>
-<a href="/task/new">New</a>
+<a th:href="@{/task/new}">New</a>
 </body>
 </html>
