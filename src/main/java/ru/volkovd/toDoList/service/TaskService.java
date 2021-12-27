@@ -14,8 +14,8 @@ import javax.jms.Session;
 @Service
 public class TaskService {
     private final TaskRepo taskRepo;
-    private JmsTemplate jmsTemplatePublish;
-    private JmsTemplate jmsTemplateQueue;
+    private final JmsTemplate jmsTemplatePublish;
+    private final JmsTemplate jmsTemplateQueue;
 
     public TaskService(TaskRepo taskRepo, JmsTemplate jmsTemplatePublish, JmsTemplate jmsTemplateQueue) {
         this.taskRepo = taskRepo;
@@ -26,17 +26,21 @@ public class TaskService {
     public void save(String title) {
         Task task = new Task(title);
         taskRepo.save(task);
-        jmsTemplatePublish.convertAndSend("journalTopic", "Заметка добавлена: " + title);
+        try {
+            jmsTemplatePublish.convertAndSend("journalTopic", "Заметка добавлена: " + title);
 
-        jmsTemplateQueue.send("journalQueue", new MessageCreator() {
-            @Override
-            public Message createMessage(Session session) throws JMSException {
+            jmsTemplateQueue.send("journalQueue", session -> {
                 MapMessage message = session.createMapMessage();
                 message.setLong("id", task.getId());
                 message.setString("title", title);
                 return message;
-            }
-        });
+            });
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
     public Iterable<Task> findAll() {
