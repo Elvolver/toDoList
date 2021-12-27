@@ -19,5 +19,3 @@ spring:
     password: admin
 server:
   port: 8081
-  servlet:
-    contextPath: /toDoList
