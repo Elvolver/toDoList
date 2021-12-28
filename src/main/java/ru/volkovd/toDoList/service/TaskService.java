@@ -35,6 +35,7 @@ public class TaskService {
                 message.setString("title", title);
                 return message;
             });
+            System.out.println("Отправлено сообщение в JMS очередь: title");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
