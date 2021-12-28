@@ -121,6 +121,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Tomcat plugin -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
